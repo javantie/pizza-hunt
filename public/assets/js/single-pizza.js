@@ -14,16 +14,17 @@ function getPizza() {
   const searchParams = new URLSearchParams(document.location.search.substring(1));
   const pizzaId = searchParams.get('id');
 
-   // get pizzaInfo
+  // get pizzaInfo
   fetch(`/api/pizzas/${pizzaId}`)
-  .then(response => {
-    // check for a 4xx or 5xx error from server
-    if (!response.ok) {
-      throw new Error({ message: 'Something went wrong!' });
-    }
+    .then(response => {
+      console.log(response);
+      if (!response.ok) {
+        console.log('hi');
+        throw new Error({ message: 'Something went wrong!' });
+      }
 
-    return response.json();
-  })
+      return response.json();
+    })
     .then(printPizza)
     .catch(err => {
       console.log(err);
@@ -109,7 +110,7 @@ function handleNewCommentSubmit(event) {
     return false;
   }
 
-  const formData = { commentBody, writtenBy }
+  const formData = { commentBody, writtenBy };
 
   fetch(`/api/comments/${pizzaId}`, {
     method: 'POST',
@@ -127,14 +128,12 @@ function handleNewCommentSubmit(event) {
     })
     .then(commentResponse => {
       console.log(commentResponse);
-      location.reload();
+      // location.reload();
     })
     .catch(err => {
       console.log(err);
     });
 }
-
-
 
 function handleNewReplySubmit(event) {
   event.preventDefault();
